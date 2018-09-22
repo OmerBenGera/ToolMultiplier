@@ -9,6 +9,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import xyz.wildseries.wildtools.api.events.SellWandUseEvent;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ToolMultiplier extends JavaPlugin implements Listener {
 
     @Override
@@ -22,26 +25,30 @@ public class ToolMultiplier extends JavaPlugin implements Listener {
     }
 
     /**
-     * This function receives an active multiplier of a player.
+     * This function receives an active percent boost of a player.
      *
      * @param player The player to check
-     * @return The active multiplier of the player (1 if not found any)
+     * @return The active percent boost of the player (0 if not found any)
      */
-    private int getMultiplier(Player player){
-        int multiplier = 1;
+    private double getMultiplier(Player player){
+        double multiplier = -1;
+        boolean hasMultiplier = false;
+
+        Matcher matcher;
 
         for(PermissionAttachmentInfo permissionAttachmentInfo : player.getEffectivePermissions()){
             String permission = permissionAttachmentInfo.getPermission();
-            if(permission.matches("wildtools\\.multiplier\\.\\d")){
+            if((matcher = Pattern.compile("wildtools\\.multiplier\\.(.*)").matcher(permission)).matches()){
                 try {
-                    int currentMultiplier = Integer.parseInt(permission.split("\\.")[2]);
+                    double currentMultiplier = Double.parseDouble(matcher.group(1));
+                    hasMultiplier = true;
                     if(currentMultiplier > multiplier)
                         multiplier = currentMultiplier;
                 }catch(NumberFormatException ignored){}
             }
         }
 
-        return multiplier;
+        return hasMultiplier ?  multiplier : 1;
     }
 
 }
