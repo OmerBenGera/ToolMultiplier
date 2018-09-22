@@ -1,5 +1,5 @@
 name: ToolMultiplier
-version: 1.1.0
+version: 1.2.0
 author: Ome_R
 main: com.ome_r.toolmultiplier.ToolMultiplier
 depend: [WildTools]
