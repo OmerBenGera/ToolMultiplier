@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import xyz.wildseries.wildtools.api.events.HarvesterHoeSellEvent;
 import xyz.wildseries.wildtools.api.events.SellWandUseEvent;
 
 import java.util.regex.Matcher;
@@ -21,7 +22,16 @@ public class ToolMultiplier extends JavaPlugin implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onSellWandUse(SellWandUseEvent e){
-        e.setPrice(e.getPrice() * getMultiplier(e.getPlayer()));
+        double multiplier = getMultiplier(e.getPlayer());
+        e.setPrice(e.getPrice() * multiplier);
+        e.setMessage(e.getMessage().replace("%multiplier%", multiplier == 1 ? "" : " (x"  + multiplier + " Multiplier)"));
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onHarvesterHoeSell(HarvesterHoeSellEvent e){
+        double multiplier = getMultiplier(e.getPlayer());
+        e.setPrice(e.getPrice() * multiplier);
+        e.setMessage(e.getMessage().replace("%multiplier%", multiplier == 1 ? "" : " (x"  + multiplier + " Multiplier)"));
     }
 
     /**
