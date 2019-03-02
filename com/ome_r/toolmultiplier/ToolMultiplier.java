@@ -1,14 +1,13 @@
 package com.ome_r.toolmultiplier;
 
+import com.bgsoftware.wildtools.api.events.HarvesterHoeSellEvent;
+import com.bgsoftware.wildtools.api.events.SellWandUseEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import xyz.wildseries.wildtools.api.events.HarvesterHoeSellEvent;
-import xyz.wildseries.wildtools.api.events.SellWandUseEvent;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
